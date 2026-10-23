@@ -70,7 +70,7 @@
             transform: translateY(-5px);
         }
 
-        /* Hiệu ứng viền phát sáng cầu vồng RGB quanh Avatar */
+        /* Viền phát sáng cầu vồng RGB xoay quanh Avatar */
         .avatar-container {
             position: relative;
             width: 135px;
@@ -172,67 +172,31 @@
             box-shadow: 0 4px 12px rgba(254, 44, 85, 0.4);
         }
 
-        /* Trình phát nhạc mượt mà */
-        .music-player {
-            padding-top: 18px;
+        /* Khung hiển thị Mã QR */
+        .qr-section {
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid #30363d;
         }
 
-        .music-btn {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
-            outline: none;
-        }
-
-        .music-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
-        }
-
-        .music-btn.playing {
-            background: linear-gradient(135deg, #fe2c55, #ff007f);
-            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
-        }
-
-        /* Bảng lời bài hát */
-        .lyrics-box {
-            margin-top: 15px;
-            max-height: 120px;
-            overflow-y: auto;
-            background: rgba(13, 17, 23, 0.7);
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 12px;
+        .qr-title {
             font-size: 0.85rem;
-            line-height: 1.6;
             color: #8b949e;
-            text-align: center;
-            display: none;
-            animation: fadeIn 0.4s ease;
+            margin-bottom: 12px;
         }
 
-        .lyrics-box::-webkit-scrollbar {
-            width: 4px;
-        }
-        .lyrics-box::-webkit-scrollbar-thumb {
-            background: #fe2c55;
-            border-radius: 4px;
+        .qr-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            padding: 6px;
+            background-color: #161b22;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
+        .qr-image:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -260,42 +224,15 @@
             </a>
         </div>
 
-        <!-- Trình phát nhạc mượt mà -->
-        <div class="music-player">
-            <button id="playBtn" class="music-btn">
-                <i id="musicIcon" class="fas fa-play"></i>
-                <span id="musicText">Phát nhạc: Vì Anh Đâu Có Biết</span>
-            </button>
-
-            <!-- Lời bài hát -->
-            <div id="lyricsBox" class="lyrics-box">
-                <b>🎵 Vì Anh Đâu Có Biết - Manky x Vũ 🎵</b><br><br>
-                Vì anh đâu có biết trái tim ngổn ngang<br>
-                Vì anh đâu có biết đúng sai hoang thoáng<br>
-                Vì anh luôn tiếc tiếc một cơn mộng anh không thể mang<br>
-                Vì anh đâu có biết giấu đi thời gian<br>
-                Vì anh đâu có biết nắng mai đang tàn<br>
-                Vì anh luôn tiếc tiếc anh không thể mang<br>
-                Mùi hương trên mái tóc giữ theo câu chuyện đánh rơi...<br><br>
-                Loay hoay câu lạc bộ trong từng cơn mưa<br>
-                Ngốc bước theo nơi đôi bờ mi đón đưa<br>
-                Bàng khuâng chìm trong làn mây thưa<br>
-                Em ơi có rơi vào nhạt nhòa hay chưa?<br>
-                Hay khi ngày em vô tình rơi<br>
-                Thả say cuốn theo con tim này đi khắp nơi<br>
-                Ngân nga lời ca còn buông lơi<br>
-                Mang theo say say ngày nào còn trên môi<br><br>
-                Ooh-ooh-ooh, bởi vì anh, bởi vì anh<br>
-                Ooh-ooh-ooh, bởi vì anh, bởi vì anh, ooh-huh...
-            </div>
-
-            <audio id="bgMusic" loop src="https://files.catbox.moe/8s0z9i.mp3"></audio>
+        <!-- Khung Mã QR -->
+        <div class="qr-section">
+            <p class="qr-title">Quét mã QR để chia sẻ trang cá nhân:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=ffffff&bgcolor=161b22" alt="Mã QR Profile" class="qr-image">
         </div>
     </div>
 
-    <!-- Script tạo tuyết rơi & Điều khiển nhạc -->
+    <!-- Script tạo tuyết rơi tự động -->
     <script>
-        // Hiệu ứng Tuyết Rơi
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
@@ -318,31 +255,9 @@
         }
 
         setInterval(createSnowflake, 200);
-
-        // Điều khiển nhạc mượt mà
-        const audio = document.getElementById('bgMusic');
-        const playBtn = document.getElementById('playBtn');
-        const musicIcon = document.getElementById('musicIcon');
-        const musicText = document.getElementById('musicText');
-        const lyricsBox = document.getElementById('lyricsBox');
-
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playBtn.classList.add('playing');
-                musicIcon.className = "fas fa-pause";
-                musicText.innerText = "Đang phát nhạc (Bấm để Tắt)";
-                lyricsBox.style.display = "block";
-            } else {
-                audio.pause();
-                playBtn.classList.remove('playing');
-                musicIcon.className = "fas fa-play";
-                musicText.innerText = "Phát nhạc: Vì Anh Đâu Có Biết";
-                lyricsBox.style.display = "none";
-            }
-        });
     </script>
 
 </body>
 </html>
+
 
