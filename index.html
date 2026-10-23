@@ -52,39 +52,68 @@
 
         /* Card cá nhân */
         .card {
-            background-color: rgba(22, 27, 34, 0.9);
+            background-color: rgba(22, 27, 34, 0.85);
             border: 1px solid #30363d;
-            border-radius: 16px;
-            padding: 40px 30px;
-            max-width: 400px;
+            border-radius: 20px;
+            padding: 35px 25px;
+            max-width: 420px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             transition: transform 0.3s ease;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .card:hover {
             transform: translateY(-5px);
         }
 
+        /* Hiệu ứng viền phát sáng cầu vồng RGB quanh Avatar */
         .avatar-container {
             position: relative;
-            width: 130px;
-            height: 130px;
+            width: 135px;
+            height: 135px;
             margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            animation: rgbGlow 12s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 200, 0.4);
+        }
+
+        .avatar-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            border-radius: 50%;
+            filter: blur(10px);
+            opacity: 0.8;
+            animation: rgbGlow 12s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rgbGlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
         }
 
         .avatar {
-            width: 100%;
-            height: 100%;
+            width: 125px;
+            height: 125px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #fe2c55;
-            padding: 3px;
-            box-shadow: 0 0 15px rgba(254, 44, 85, 0.4);
+            border: 3px solid #161b22;
         }
 
         .name {
@@ -97,20 +126,21 @@
         .tagline {
             font-size: 0.9rem;
             color: #8b949e;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .bio {
             font-size: 0.95rem;
             line-height: 1.5;
             color: #8b949e;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .links {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -119,10 +149,10 @@
             justify-content: center;
             gap: 10px;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             background-color: #21262d;
             color: #c9d1d9;
             border: 1px solid #30363d;
@@ -132,45 +162,84 @@
             background-color: #1877f2;
             color: white;
             border-color: #1877f2;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
         }
 
         .btn-tiktok:hover {
             background-color: #000000;
             color: white;
             border-color: #fe2c55;
+            box-shadow: 0 4px 12px rgba(254, 44, 85, 0.4);
         }
 
-        /* Nút phát nhạc */
+        /* Trình phát nhạc mượt mà */
         .music-player {
-            margin-top: 25px;
-            padding-top: 20px;
+            padding-top: 18px;
             border-top: 1px solid #30363d;
         }
 
         .music-btn {
-            background: linear-gradient(45deg, #fe2c55, #ff007f);
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 24px;
+            border-radius: 25px;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(254, 44, 85, 0.3);
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+            outline: none;
         }
 
         .music-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(254, 44, 85, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
+        }
+
+        .music-btn.playing {
+            background: linear-gradient(135deg, #fe2c55, #ff007f);
+            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
+        }
+
+        /* Bảng lời bài hát */
+        .lyrics-box {
+            margin-top: 15px;
+            max-height: 120px;
+            overflow-y: auto;
+            background: rgba(13, 17, 23, 0.7);
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #8b949e;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .lyrics-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .lyrics-box::-webkit-scrollbar-thumb {
+            background: #fe2c55;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <!-- Avatar với viền phát sáng Cầu vồng RGB -->
         <div class="avatar-container">
             <img src="sang.png" alt="Kim Hoàng Sang" class="avatar">
         </div>
@@ -191,11 +260,35 @@
             </a>
         </div>
 
-        <!-- Trình phát nhạc -->
+        <!-- Trình phát nhạc mượt mà -->
         <div class="music-player">
             <button id="playBtn" class="music-btn">
-                <i class="fas fa-music"></i> <span id="musicText">Bật Nhạc: Vì Anh Đâu Có Biết</span>
+                <i id="musicIcon" class="fas fa-play"></i>
+                <span id="musicText">Phát nhạc: Vì Anh Đâu Có Biết</span>
             </button>
+
+            <!-- Lời bài hát -->
+            <div id="lyricsBox" class="lyrics-box">
+                <b>🎵 Vì Anh Đâu Có Biết - Manky x Vũ 🎵</b><br><br>
+                Vì anh đâu có biết trái tim ngổn ngang<br>
+                Vì anh đâu có biết đúng sai hoang thoáng<br>
+                Vì anh luôn tiếc tiếc một cơn mộng anh không thể mang<br>
+                Vì anh đâu có biết giấu đi thời gian<br>
+                Vì anh đâu có biết nắng mai đang tàn<br>
+                Vì anh luôn tiếc tiếc anh không thể mang<br>
+                Mùi hương trên mái tóc giữ theo câu chuyện đánh rơi...<br><br>
+                Loay hoay câu lạc bộ trong từng cơn mưa<br>
+                Ngốc bước theo nơi đôi bờ mi đón đưa<br>
+                Bàng khuâng chìm trong làn mây thưa<br>
+                Em ơi có rơi vào nhạt nhòa hay chưa?<br>
+                Hay khi ngày em vô tình rơi<br>
+                Thả say cuốn theo con tim này đi khắp nơi<br>
+                Ngân nga lời ca còn buông lơi<br>
+                Mang theo say say ngày nào còn trên môi<br><br>
+                Ooh-ooh-ooh, bởi vì anh, bởi vì anh<br>
+                Ooh-ooh-ooh, bởi vì anh, bởi vì anh, ooh-huh...
+            </div>
+
             <audio id="bgMusic" loop src="https://files.catbox.moe/8s0z9i.mp3"></audio>
         </div>
     </div>
@@ -226,20 +319,26 @@
 
         setInterval(createSnowflake, 200);
 
-        // Điều khiển nhạc
+        // Điều khiển nhạc mượt mà
         const audio = document.getElementById('bgMusic');
         const playBtn = document.getElementById('playBtn');
+        const musicIcon = document.getElementById('musicIcon');
         const musicText = document.getElementById('musicText');
+        const lyricsBox = document.getElementById('lyricsBox');
 
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
-                musicText.innerText = "Tắt Nhạc";
-                playBtn.style.background = "#30363d";
+                playBtn.classList.add('playing');
+                musicIcon.className = "fas fa-pause";
+                musicText.innerText = "Đang phát nhạc (Bấm để Tắt)";
+                lyricsBox.style.display = "block";
             } else {
                 audio.pause();
-                musicText.innerText = "Bật Nhạc: Vì Anh Đâu Có Biết";
-                playBtn.style.background = "linear-gradient(45deg, #fe2c55, #ff007f)";
+                playBtn.classList.remove('playing');
+                musicIcon.className = "fas fa-play";
+                musicText.innerText = "Phát nhạc: Vì Anh Đâu Có Biết";
+                lyricsBox.style.display = "none";
             }
         });
     </script>
