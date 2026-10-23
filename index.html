@@ -14,7 +14,9 @@
         }
 
         body {
-            background-color: #0d1117;
+            /* Ảnh nền hoa anh đào Tokyo Skytree */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('cover.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #c9d1d9;
             display: flex;
             justify-content: center;
@@ -25,35 +27,39 @@
             position: relative;
         }
 
-        /* Hiệu ứng tuyết rơi */
-        .snowflake {
+        /* Hiệu ứng cánh hoa anh đào (Sakura) rơi */
+        .sakura {
             position: fixed;
             top: -10px;
-            color: #fff;
+            color: #ffb7c5;
             user-select: none;
             z-index: 1;
             pointer-events: none;
             animation-name: fall;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
-            opacity: 0.8;
+            opacity: 0.9;
+            text-shadow: 0 0 5px rgba(255, 183, 197, 0.8);
         }
 
         @keyframes fall {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translateY(0) rotate(0deg) translateX(0);
                 opacity: 0.9;
             }
+            50% {
+                transform: translateY(50vh) rotate(180deg) translateX(25px);
+            }
             100% {
-                transform: translateY(105vh) rotate(360deg);
+                transform: translateY(105vh) rotate(360deg) translateX(-25px);
                 opacity: 0.2;
             }
         }
 
-        /* Card cá nhân */
+        /* Card cá nhân kính mờ (Glassmorphism) */
         .card {
-            background-color: rgba(22, 27, 34, 0.85);
-            border: 1px solid #30363d;
+            background-color: rgba(13, 17, 23, 0.75);
+            border: 1px solid rgba(255, 183, 197, 0.3);
             border-radius: 20px;
             padding: 35px 25px;
             max-width: 420px;
@@ -63,7 +69,7 @@
             transition: transform 0.3s ease;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
 
         .card:hover {
@@ -125,14 +131,14 @@
 
         .tagline {
             font-size: 0.9rem;
-            color: #8b949e;
+            color: #ffb7c5;
             margin-bottom: 18px;
         }
 
         .bio {
             font-size: 0.95rem;
             line-height: 1.5;
-            color: #8b949e;
+            color: #c9d1d9;
             margin-bottom: 25px;
         }
 
@@ -153,7 +159,7 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.25s ease;
-            background-color: #21262d;
+            background-color: rgba(33, 38, 45, 0.8);
             color: #c9d1d9;
             border: 1px solid #30363d;
         }
@@ -172,11 +178,11 @@
             box-shadow: 0 4px 12px rgba(254, 44, 85, 0.4);
         }
 
-        /* Khung hiển thị Mã QR */
+        /* Khung Mã QR */
         .qr-section {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid #30363d;
+            border-top: 1px solid rgba(255, 183, 197, 0.2);
         }
 
         .qr-title {
@@ -209,7 +215,7 @@
         </div>
         
         <h1 class="name">Kim Hoàng Sang</h1>
-        <p class="tagline">✨ Kết nối - Cảm hứng - Yêu đời ✨</p>
+        <p class="tagline">🌸 Kết nối - Cảm hứng - Yêu đời 🌸</p>
         
         <p class="bio">
             Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
@@ -231,33 +237,34 @@
         </div>
     </div>
 
-    <!-- Script tạo tuyết rơi tự động -->
+    <!-- Script tạo hiệu ứng cánh hoa anh đào rơi -->
     <script>
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
             
-            const icons = ['❄', '❅', '❆', '•'];
-            snowflake.innerText = icons[Math.floor(Math.random() * icons.length)];
+            // Các dạng biểu tượng hoa anh đào
+            const petals = ['🌸', '💮', '🌸', '🌸'];
+            sakura.innerText = petals[Math.floor(Math.random() * petals.length)];
             
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 12 + 10;
-            snowflake.style.fontSize = size + 'px';
+            sakura.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 10 + 12; // Kích thước 12px - 22px
+            sakura.style.fontSize = size + 'px';
             
-            const duration = Math.random() * 5 + 3;
-            snowflake.style.animationDuration = duration + 's';
+            const duration = Math.random() * 4 + 4; // Tốc độ rơi 4s - 8s
+            sakura.style.animationDuration = duration + 's';
             
-            document.body.appendChild(snowflake);
+            document.body.appendChild(sakura);
             
             setTimeout(() => {
-                snowflake.remove();
+                sakura.remove();
             }, duration * 1000);
         }
 
-        setInterval(createSnowflake, 200);
+        // Tạo cánh hoa liên tục mỗi 250ms
+        setInterval(createSakura, 250);
     </script>
 
 </body>
 </html>
-
 
