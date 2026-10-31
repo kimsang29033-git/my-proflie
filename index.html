@@ -14,8 +14,8 @@
         }
 
         body {
-            /* Ảnh nền hoa anh đào Tokyo Skytree */
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('cover.jpg') no-repeat center center fixed;
+            /* Tối ưu hiển thị ảnh nền cover.jpg */
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('cover.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #c9d1d9;
             display: flex;
@@ -69,18 +69,18 @@
 
         /* Card cá nhân kính mờ (Glassmorphism) */
         .card {
-            background-color: rgba(13, 17, 23, 0.75);
-            border: 1px solid rgba(255, 183, 197, 0.3);
+            background-color: rgba(13, 17, 23, 0.82);
+            border: 1px solid rgba(255, 183, 197, 0.35);
             border-radius: 20px;
             padding: 35px 25px;
             max-width: 420px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
             transition: transform 0.3s ease;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
 
         .card:hover {
@@ -131,6 +131,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #161b22;
+            background-color: #21262d;
         }
 
         .name {
@@ -192,7 +193,7 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.25s ease;
-            background-color: rgba(33, 38, 45, 0.8);
+            background-color: rgba(33, 38, 45, 0.85);
             color: #c9d1d9;
             border: 1px solid #30363d;
         }
@@ -230,7 +231,7 @@
             border-radius: 12px;
             border: 1px solid #30363d;
             padding: 6px;
-            background-color: #161b22;
+            background-color: #ffffff;
             transition: transform 0.3s ease;
         }
 
@@ -241,13 +242,13 @@
 </head>
 <body>
 
-    <!-- Canvas cho hiệu ứng chuột tương tác -->
+    <!-- Canvas hiệu ứng chuột tương tác -->
     <canvas id="cursorCanvas"></canvas>
 
     <div class="card">
         <!-- Avatar với viền phát sáng Cầu vồng RGB -->
         <div class="avatar-container">
-            <img src="sang.png" alt="Kim Hoàng Sang" class="avatar">
+            <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
         </div>
         
         <h1 class="name">Kim Hoàng Sang</h1>
@@ -271,7 +272,7 @@
         <!-- Khung Mã QR -->
         <div class="qr-section">
             <p class="qr-title">Quét mã QR để chia sẻ trang cá nhân:</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=ffffff&bgcolor=161b22" alt="Mã QR Profile" class="qr-image">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=000000&bgcolor=ffffff" alt="Mã QR Profile" class="qr-image">
         </div>
     </div>
 
@@ -360,3 +361,52 @@
                 particles[i].draw();
                 if (particles[i].life <= 0) {
                     particles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(handleParticles);
+        }
+
+        handleParticles();
+
+        // 3. Hiệu ứng gõ chữ (Typing Effect)
+        const typedTextSpan = document.getElementById("typedText");
+        const textArray = [
+            "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
+            "💻 Chào mừng đến với trang cá nhân!",
+            "✨ Cùng theo dõi các dự án mới nhé!"
+        ];
+        const typingDelay = 80;
+        const erasingDelay = 40;
+        const newTextDelay = 1500;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                textArrayIndex++;
+                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 200);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (textArray.length) setTimeout(type, 500);
+        });
+    </script>
+
+</body>
+</html>
