@@ -87,7 +87,7 @@
             transform: translateY(-5px);
         }
 
-        /* Viền phát sáng cầu vồng RGB xoay quanh Avatar */
+        /* Viền phát sáng cầu vồng RGB xoay quanh Avatar (Thêm hiệu ứng con trỏ pointer để báo hiệu bấm được) */
         .avatar-container {
             position: relative;
             width: 135px;
@@ -101,6 +101,7 @@
             background-size: 400%;
             animation: rgbGlow 12s linear infinite;
             box-shadow: 0 0 20px rgba(255, 0, 200, 0.4);
+            cursor: pointer;
         }
 
         .avatar-container::before {
@@ -134,7 +135,7 @@
             background-color: #21262d;
         }
 
-        /* Huy hiệu trạng thái hoạt động (Active Status Badge) */
+        /* Huy hiệu trạng thái hoạt động */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -146,13 +147,20 @@
             font-size: 0.8rem;
             color: #8b949e;
             margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
-            background-color: #238636;
+            background-color: #8b949e;
             border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        /* Hiệu ứng nhấp nháy khi Online */
+        .online .status-dot {
+            background-color: #238636;
             box-shadow: 0 0 8px #238636;
             animation: pulseDot 2s infinite;
         }
@@ -276,13 +284,13 @@
 
     <div class="card">
         <!-- Avatar với viền phát sáng Cầu vồng RGB -->
-        <div class="avatar-container">
+        <div class="avatar-container" id="adminAvatar" title="Bấm 3 lần để chuyển trạng thái Online/Offline">
             <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
         </div>
         
         <!-- Huy hiệu trạng thái hoạt động -->
-        <div class="status-badge">
-            <span class="status-dot"></span> Đang trực tuyến & Code dở dang
+        <div class="status-badge" id="statusBadge">
+            <span class="status-dot"></span> <span id="statusText">Đang ngoại tuyến</span>
         </div>
         
         <h1 class="name">Kim Hoàng Sang</h1>
@@ -310,9 +318,49 @@
         </div>
     </div>
 
-    <!-- Script hiệu ứng hoa anh đào, Hạt theo chuột & Gõ chữ -->
+    <!-- Script xử lý Admin Toggle, Hoa anh đào, Hạt theo chuột & Gõ chữ -->
     <script>
-        // 1. Hiệu ứng cánh hoa anh đào rơi
+        // --- QUẢN LÝ TRẠNG THÁI ADMIN (ONLINE / OFFLINE) ---
+        const statusBadge = document.getElementById('statusBadge');
+        const statusText = document.getElementById('statusText');
+        const adminAvatar = document.getElementById('adminAvatar');
+
+        // Mặc định cho người khác xem là False (Ngoại tuyến)
+        let isAdminOnline = localStorage.getItem('isAdminOnline') === 'true';
+
+        function updateAdminStatusUI() {
+            if (isAdminOnline) {
+                statusBadge.classList.add('online');
+                statusText.innerText = 'Đang trực tuyến';
+            } else {
+                statusBadge.classList.remove('online');
+                statusText.innerText = 'Đang ngoại tuyến';
+            }
+        }
+        updateAdminStatusUI();
+
+        // Bấm liên tiếp 3 lần vào Avatar trên máy của bạn để bật/tắt chế độ Online
+        let clickCount = 0;
+        let clickTimer = null;
+
+        adminAvatar.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            
+            if (clickCount === 3) {
+                isAdminOnline = !isAdminOnline;
+                localStorage.setItem('isAdminOnline', isAdminOnline);
+                updateAdminStatusUI();
+                alert(isAdminOnline ? "🟢 Đã bật: Đang trực tuyến!" : "⚪ Đã chuyển: Đang ngoại tuyến!");
+                clickCount = 0;
+            } else {
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 600);
+            }
+        });
+
+        // --- 1. Hiệu ứng cánh hoa anh đào rơi ---
         function createSakura() {
             const sakura = document.createElement('div');
             sakura.classList.add('sakura');
@@ -336,7 +384,7 @@
 
         setInterval(createSakura, 250);
 
-        // 2. Hiệu ứng hạt ánh sáng chạy theo con trỏ chuột
+        // --- 2. Hiệu ứng hạt ánh sáng chạy theo con trỏ chuột ---
         const canvas = document.getElementById('cursorCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -402,7 +450,7 @@
 
         handleParticles();
 
-        // 3. Hiệu ứng gõ chữ (Typing Effect)
+        // --- 3. Hiệu ứng gõ chữ (Typing Effect) ---
         const typedTextSpan = document.getElementById("typedText");
         const textArray = [
             "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
