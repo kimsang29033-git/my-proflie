@@ -140,10 +140,32 @@
             margin-bottom: 8px;
         }
 
+        /* Styling cho phần gõ chữ Slogan */
         .tagline {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #ffb7c5;
             margin-bottom: 18px;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Con trỏ nhấp nháy khi gõ */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background-color: #ffb7c5;
+            margin-left: 3px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .bio {
@@ -229,7 +251,9 @@
         </div>
         
         <h1 class="name">Kim Hoàng Sang</h1>
-        <p class="tagline">🌸 Kết nối - Cảm hứng - Yêu đời 🌸</p>
+        
+        <!-- Khung hiển thị hiệu ứng gõ chữ -->
+        <p class="tagline"><span id="typedText"></span><span class="typing-cursor"></span></p>
         
         <p class="bio">
             Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
@@ -251,7 +275,7 @@
         </div>
     </div>
 
-    <!-- Script tạo hiệu ứng cánh hoa anh đào rơi & Hạt ánh sáng theo chuột -->
+    <!-- Script hiệu ứng hoa anh đào, Hạt theo chuột & Gõ chữ -->
     <script>
         // 1. Hiệu ứng cánh hoa anh đào rơi
         function createSakura() {
@@ -295,7 +319,6 @@
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
-            // Tạo 2 hạt ánh sáng mỗi khi di chuyển chuột
             for (let i = 0; i < 2; i++) {
                 particles.push(new Particle(mouse.x, mouse.y));
             }
@@ -308,14 +331,14 @@
                 this.size = Math.random() * 4 + 1;
                 this.speedX = Math.random() * 3 - 1.5;
                 this.speedY = Math.random() * 3 - 1.5;
-                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`; // Tông màu hồng/tím hoa anh đào
-                this.life = 1; // Độ mờ giảm dần
+                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`;
+                this.life = 1;
             }
 
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                this.life -= 0.03; // Tốc độ biến mất của hạt
+                this.life -= 0.03;
             }
 
             draw() {
@@ -337,13 +360,3 @@
                 particles[i].draw();
                 if (particles[i].life <= 0) {
                     particles.splice(i, 1);
-                }
-            }
-            requestAnimationFrame(handleParticles);
-        }
-
-        handleParticles();
-    </script>
-
-</body>
-</html>
