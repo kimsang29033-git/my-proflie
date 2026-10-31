@@ -87,7 +87,7 @@
             transform: translateY(-5px);
         }
 
-        /* Viền phát sáng cầu vồng RGB xoay quanh Avatar (Thêm hiệu ứng con trỏ pointer để báo hiệu bấm được) */
+        /* Viền phát sáng cầu vồng RGB xoay quanh Avatar */
         .avatar-container {
             position: relative;
             width: 135px;
@@ -275,6 +275,24 @@
         .qr-image:hover {
             transform: scale(1.05);
         }
+
+        /* Khung Bộ Đếm Lượt Xem */
+        .visitor-counter {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 183, 197, 0.2);
+            font-size: 0.8rem;
+            color: #8b949e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .visitor-counter img {
+            vertical-align: middle;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -299,196 +317,4 @@
         <p class="tagline"><span id="typedText"></span><span class="typing-cursor"></span></p>
         
         <p class="bio">
-            Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
-        </p>
-
-        <div class="links">
-            <a href="https://www.facebook.com/h24302?locale=vi_VN" target="_blank" class="btn btn-facebook">
-                <i class="fab fa-facebook"></i> Facebook
-            </a>
-            <a href="https://www.tiktok.com/@hsang.ahihi" target="_blank" class="btn btn-tiktok">
-                <i class="fab fa-tiktok"></i> TikTok (@hsang.ahihi)
-            </a>
-        </div>
-
-        <!-- Khung Mã QR -->
-        <div class="qr-section">
-            <p class="qr-title">Quét mã QR để chia sẻ trang cá nhân:</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=000000&bgcolor=ffffff" alt="Mã QR Profile" class="qr-image">
-        </div>
-    </div>
-
-    <!-- Script xử lý Admin Toggle, Hoa anh đào, Hạt theo chuột & Gõ chữ -->
-    <script>
-        // --- QUẢN LÝ TRẠNG THÁI ADMIN (ONLINE / OFFLINE) ---
-        const statusBadge = document.getElementById('statusBadge');
-        const statusText = document.getElementById('statusText');
-        const adminAvatar = document.getElementById('adminAvatar');
-
-        // Mặc định cho người khác xem là False (Ngoại tuyến)
-        let isAdminOnline = localStorage.getItem('isAdminOnline') === 'true';
-
-        function updateAdminStatusUI() {
-            if (isAdminOnline) {
-                statusBadge.classList.add('online');
-                statusText.innerText = 'Đang trực tuyến';
-            } else {
-                statusBadge.classList.remove('online');
-                statusText.innerText = 'Đang ngoại tuyến';
-            }
-        }
-        updateAdminStatusUI();
-
-        // Bấm liên tiếp 3 lần vào Avatar trên máy của bạn để bật/tắt chế độ Online
-        let clickCount = 0;
-        let clickTimer = null;
-
-        adminAvatar.addEventListener('click', () => {
-            clickCount++;
-            clearTimeout(clickTimer);
-            
-            if (clickCount === 3) {
-                isAdminOnline = !isAdminOnline;
-                localStorage.setItem('isAdminOnline', isAdminOnline);
-                updateAdminStatusUI();
-                alert(isAdminOnline ? "🟢 Đã bật: Đang trực tuyến!" : "⚪ Đã chuyển: Đang ngoại tuyến!");
-                clickCount = 0;
-            } else {
-                clickTimer = setTimeout(() => {
-                    clickCount = 0;
-                }, 600);
-            }
-        });
-
-        // --- 1. Hiệu ứng cánh hoa anh đào rơi ---
-        function createSakura() {
-            const sakura = document.createElement('div');
-            sakura.classList.add('sakura');
-            
-            const petals = ['🌸', '💮', '🌸', '🌸'];
-            sakura.innerText = petals[Math.floor(Math.random() * petals.length)];
-            
-            sakura.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 10 + 12;
-            sakura.style.fontSize = size + 'px';
-            
-            const duration = Math.random() * 4 + 4;
-            sakura.style.animationDuration = duration + 's';
-            
-            document.body.appendChild(sakura);
-            
-            setTimeout(() => {
-                sakura.remove();
-            }, duration * 1000);
-        }
-
-        setInterval(createSakura, 250);
-
-        // --- 2. Hiệu ứng hạt ánh sáng chạy theo con trỏ chuột ---
-        const canvas = document.getElementById('cursorCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let particles = [];
-        let mouse = { x: null, y: null };
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            for (let i = 0; i < 2; i++) {
-                particles.push(new Particle(mouse.x, mouse.y));
-            }
-        });
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 4 + 1;
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`;
-                this.life = 1;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= 0.03;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.life;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function handleParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                }
-            }
-            requestAnimationFrame(handleParticles);
-        }
-
-        handleParticles();
-
-        // --- 3. Hiệu ứng gõ chữ (Typing Effect) ---
-        const typedTextSpan = document.getElementById("typedText");
-        const textArray = [
-            "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
-            "💻 Chào mừng đến với trang cá nhân!",
-            "✨ Cùng theo dõi các dự án mới nhé!"
-        ];
-        const typingDelay = 80;
-        const erasingDelay = 40;
-        const newTextDelay = 1500;
-        let textArrayIndex = 0;
-        let charIndex = 0;
-
-        function type() {
-            if (charIndex < textArray[textArrayIndex].length) {
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                setTimeout(erase, newTextDelay);
-            }
-        }
-
-        function erase() {
-            if (charIndex > 0) {
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                textArrayIndex++;
-                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-                setTimeout(type, typingDelay + 200);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            if (textArray.length) setTimeout(type, 500);
-        });
-    </script>
-
-</body>
-</html>
+            Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá
