@@ -234,6 +234,7 @@
             border-radius: 8px;
             font-size: 0.85rem;
             color: #c9d1d9;
+            cursor: pointer;
             transition: all 0.25s ease;
         }
 
@@ -245,6 +246,86 @@
 
         .skill-badge i {
             font-size: 1rem;
+        }
+
+        /* Khung Modal Chi Tiết Bài Học */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: #161b22;
+            border: 1px solid rgba(255, 183, 197, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #ffb7c5;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            color: #f0f6fc;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-body {
+            font-size: 0.9rem;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        .modal-body ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .modal-body li {
+            margin-bottom: 6px;
         }
 
         /* Nút Mạng Xã Hội */
@@ -336,230 +417,4 @@
 
     <div class="card">
         <!-- Avatar & Viền RGB -->
-        <div class="avatar-wrapper" id="adminAvatar" title="Bấm 3 lần để chuyển trạng thái Online/Offline">
-            <div class="avatar-glow"></div>
-            <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
-        </div>
-        
-        <!-- Huy hiệu trạng thái hoạt động -->
-        <div class="status-badge" id="statusBadge">
-            <span class="status-dot"></span> <span id="statusText">Đang ngoại tuyến</span>
-        </div>
-        
-        <h1 class="name">Kim Hoàng Sang</h1>
-        
-        <!-- Hiệu ứng gõ chữ -->
-        <p class="tagline"><span id="typedText"></span><span class="typing-cursor"></span></p>
-        
-        <p class="bio">
-            Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
-        </p>
-
-        <!-- Hộp Kỹ Năng (Tech Stack) -->
-        <div class="skills-section">
-            <p class="skills-title">⚡ Hộp kỹ năng & Công nghệ</p>
-            <div class="skills-container">
-                <span class="skill-badge" style="color: #3776ab;"><i class="fab fa-python"></i> Python</span>
-                <span class="skill-badge" style="color: #00599c;"><i class="fas fa-code"></i> C++</span>
-                <span class="skill-badge" style="color: #e34f26;"><i class="fab fa-html5"></i> HTML5</span>
-                <span class="skill-badge" style="color: #1572b6;"><i class="fab fa-css3-alt"></i> CSS3</span>
-                <span class="skill-badge" style="color: #f7df1e;"><i class="fab fa-js"></i> JavaScript</span>
-                <span class="skill-badge" style="color: #007acc;"><i class="fas fa-laptop-code"></i> VS Code</span>
-                <span class="skill-badge" style="color: #f05032;"><i class="fab fa-git-alt"></i> Git</span>
-            </div>
-        </div>
-
-        <div class="links">
-            <a href="https://www.facebook.com/h24302?locale=vi_VN" target="_blank" class="btn btn-facebook">
-                <i class="fab fa-facebook"></i> Facebook
-            </a>
-            <a href="https://www.tiktok.com/@hsang.ahihi" target="_blank" class="btn btn-tiktok">
-                <i class="fab fa-tiktok"></i> TikTok (@hsang.ahihi)
-            </a>
-        </div>
-
-        <!-- Khung Mã QR -->
-        <div class="qr-section">
-            <p class="qr-title">Quét mã QR để chia sẻ trang cá nhân:</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=000000&bgcolor=ffffff" alt="Mã QR Profile" class="qr-image">
-        </div>
-
-        <!-- Bộ Đếm Lượt Xem -->
-        <div class="visitor-counter">
-            <i class="fas fa-eye"></i> Lượt truy cập: 
-            <img src="https://profile-counter.glitch.me/kimsang29033-profile/count.svg" alt="Visitor Count">
-        </div>
-    </div>
-
-    <!-- Script xử lý -->
-    <script>
-        // Quản lý trạng thái Admin
-        const statusBadge = document.getElementById('statusBadge');
-        const statusText = document.getElementById('statusText');
-        const adminAvatar = document.getElementById('adminAvatar');
-
-        let isAdminOnline = localStorage.getItem('isAdminOnline') === 'true';
-
-        function updateAdminStatusUI() {
-            if (isAdminOnline) {
-                statusBadge.classList.add('online');
-                statusText.innerText = 'Đang trực tuyến';
-            } else {
-                statusBadge.classList.remove('online');
-                statusText.innerText = 'Đang ngoại tuyến';
-            }
-        }
-        updateAdminStatusUI();
-
-        let clickCount = 0;
-        let clickTimer = null;
-
-        adminAvatar.addEventListener('click', () => {
-            clickCount++;
-            clearTimeout(clickTimer);
-            
-            if (clickCount === 3) {
-                isAdminOnline = !isAdminOnline;
-                localStorage.setItem('isAdminOnline', isAdminOnline);
-                updateAdminStatusUI();
-                alert(isAdminOnline ? "🟢 Đã bật: Đang trực tuyến!" : "⚪ Đã chuyển: Đang ngoại tuyến!");
-                clickCount = 0;
-            } else {
-                clickTimer = setTimeout(() => {
-                    clickCount = 0;
-                }, 600);
-            }
-        });
-
-        // Hiệu ứng hoa anh đào rơi
-        function createSakura() {
-            const sakura = document.createElement('div');
-            sakura.classList.add('sakura');
-            
-            const petals = ['🌸', '💮', '🌸', '🌸'];
-            sakura.innerText = petals[Math.floor(Math.random() * petals.length)];
-            
-            sakura.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 10 + 12;
-            sakura.style.fontSize = size + 'px';
-            
-            const duration = Math.random() * 4 + 4;
-            sakura.style.animationDuration = duration + 's';
-            
-            document.body.appendChild(sakura);
-            
-            setTimeout(() => {
-                sakura.remove();
-            }, duration * 1000);
-        }
-
-        setInterval(createSakura, 250);
-
-        // Hiệu ứng hạt ánh sáng theo chuột
-        const canvas = document.getElementById('cursorCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let particles = [];
-        let mouse = { x: null, y: null };
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            for (let i = 0; i < 2; i++) {
-                particles.push(new Particle(mouse.x, mouse.y));
-            }
-        });
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 4 + 1;
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`;
-                this.life = 1;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= 0.03;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.life;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function handleParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                }
-            }
-            requestAnimationFrame(handleParticles);
-        }
-
-        handleParticles();
-
-        // Hiệu ứng gõ chữ
-        const typedTextSpan = document.getElementById("typedText");
-        const textArray = [
-            "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
-            "💻 Chào mừng đến với trang cá nhân!",
-            "✨ Cùng theo dõi các dự án mới nhé!"
-        ];
-        const typingDelay = 80;
-        const erasingDelay = 40;
-        const newTextDelay = 1500;
-        let textArrayIndex = 0;
-        let charIndex = 0;
-
-        function type() {
-            if (charIndex < textArray[textArrayIndex].length) {
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                setTimeout(erase, newTextDelay);
-            }
-        }
-
-        function erase() {
-            if (charIndex > 0) {
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                textArrayIndex++;
-                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-                setTimeout(type, typingDelay + 200);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            if (textArray.length) setTimeout(type, 500);
-        });
-    </script>
-
-</body>
-</html>
+        <div class="avatar
