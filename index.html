@@ -92,7 +92,7 @@
             position: relative;
             width: 135px;
             height: 135px;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -132,6 +132,35 @@
             object-fit: cover;
             border: 3px solid #161b22;
             background-color: #21262d;
+        }
+
+        /* Huy hiệu trạng thái hoạt động (Active Status Badge) */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(33, 38, 45, 0.9);
+            border: 1px solid #30363d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #8b949e;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #238636;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #238636;
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 134, 54, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(35, 134, 54, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 134, 54, 0); }
         }
 
         .name {
@@ -249,6 +278,11 @@
         <!-- Avatar với viền phát sáng Cầu vồng RGB -->
         <div class="avatar-container">
             <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
+        </div>
+        
+        <!-- Huy hiệu trạng thái hoạt động -->
+        <div class="status-badge">
+            <span class="status-dot"></span> Đang trực tuyến & Code dở dang
         </div>
         
         <h1 class="name">Kim Hoàng Sang</h1>
