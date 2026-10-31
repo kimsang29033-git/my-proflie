@@ -72,7 +72,7 @@
             border: 1px solid rgba(255, 183, 197, 0.35);
             border-radius: 24px;
             padding: 35px 25px;
-            max-width: 420px;
+            max-width: 440px;
             width: 100%;
             text-align: center;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
@@ -87,7 +87,7 @@
             transform: translateY(-5px);
         }
 
-        /* Sửa lỗi viền phát sáng RGB quanh Avatar */
+        /* Avatar & Viền phát sáng RGB */
         .avatar-wrapper {
             position: relative;
             width: 136px;
@@ -171,11 +171,11 @@
             margin-bottom: 8px;
         }
 
-        /* Styling cho phần gõ chữ Slogan */
+        /* Hiệu ứng gõ chữ Slogan */
         .tagline {
             font-size: 0.95rem;
             color: #ffb7c5;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             min-height: 28px;
             display: flex;
             align-items: center;
@@ -202,9 +202,52 @@
             font-size: 0.95rem;
             line-height: 1.5;
             color: #c9d1d9;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
+        /* Hộp Kỹ Năng (Tech Stack Badges) */
+        .skills-section {
+            margin-bottom: 20px;
+        }
+
+        .skills-title {
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(33, 38, 45, 0.9);
+            border: 1px solid #30363d;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #c9d1d9;
+            transition: all 0.25s ease;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-3px);
+            border-color: #ffb7c5;
+            box-shadow: 0 4px 12px rgba(255, 183, 197, 0.3);
+        }
+
+        .skill-badge i {
+            font-size: 1rem;
+        }
+
+        /* Nút Mạng Xã Hội */
         .links {
             display: flex;
             flex-direction: column;
@@ -268,7 +311,7 @@
             transform: scale(1.05);
         }
 
-        /* Khung Bộ Đếm Lượt Xem */
+        /* Bộ Đếm Lượt Xem */
         .visitor-counter {
             margin-top: 20px;
             padding-top: 15px;
@@ -292,7 +335,7 @@
     <canvas id="cursorCanvas"></canvas>
 
     <div class="card">
-        <!-- Viền RGB chuẩn cho Avatar -->
+        <!-- Avatar & Viền RGB -->
         <div class="avatar-wrapper" id="adminAvatar" title="Bấm 3 lần để chuyển trạng thái Online/Offline">
             <div class="avatar-glow"></div>
             <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
@@ -305,12 +348,26 @@
         
         <h1 class="name">Kim Hoàng Sang</h1>
         
-        <!-- Khung hiển thị hiệu ứng gõ chữ -->
+        <!-- Hiệu ứng gõ chữ -->
         <p class="tagline"><span id="typedText"></span><span class="typing-cursor"></span></p>
         
         <p class="bio">
             Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
         </p>
+
+        <!-- Hộp Kỹ Năng (Tech Stack) -->
+        <div class="skills-section">
+            <p class="skills-title">⚡ Hộp kỹ năng & Công nghệ</p>
+            <div class="skills-container">
+                <span class="skill-badge" style="color: #3776ab;"><i class="fab fa-python"></i> Python</span>
+                <span class="skill-badge" style="color: #00599c;"><i class="fas fa-code"></i> C++</span>
+                <span class="skill-badge" style="color: #e34f26;"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="skill-badge" style="color: #1572b6;"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="skill-badge" style="color: #f7df1e;"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="skill-badge" style="color: #007acc;"><i class="fas fa-laptop-code"></i> VS Code</span>
+                <span class="skill-badge" style="color: #f05032;"><i class="fab fa-git-alt"></i> Git</span>
+            </div>
+        </div>
 
         <div class="links">
             <a href="https://www.facebook.com/h24302?locale=vi_VN" target="_blank" class="btn btn-facebook">
@@ -327,16 +384,16 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=000000&bgcolor=ffffff" alt="Mã QR Profile" class="qr-image">
         </div>
 
-        <!-- Bộ Đếm Lượt Xem Trang -->
+        <!-- Bộ Đếm Lượt Xem -->
         <div class="visitor-counter">
             <i class="fas fa-eye"></i> Lượt truy cập: 
             <img src="https://profile-counter.glitch.me/kimsang29033-profile/count.svg" alt="Visitor Count">
         </div>
     </div>
 
-    <!-- Script xử lý Admin Toggle, Hoa anh đào, Hạt theo chuột & Gõ chữ -->
+    <!-- Script xử lý -->
     <script>
-        // QUẢN LÝ TRẠNG THÁI ADMIN
+        // Quản lý trạng thái Admin
         const statusBadge = document.getElementById('statusBadge');
         const statusText = document.getElementById('statusText');
         const adminAvatar = document.getElementById('adminAvatar');
@@ -374,7 +431,7 @@
             }
         });
 
-        // 1. Hiệu ứng hoa anh đào rơi
+        // Hiệu ứng hoa anh đào rơi
         function createSakura() {
             const sakura = document.createElement('div');
             sakura.classList.add('sakura');
@@ -398,7 +455,7 @@
 
         setInterval(createSakura, 250);
 
-        // 2. Hiệu ứng hạt ánh sáng theo chuột
+        // Hiệu ứng hạt ánh sáng theo chuột
         const canvas = document.getElementById('cursorCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -464,7 +521,7 @@
 
         handleParticles();
 
-        // 3. Hiệu ứng gõ chữ
+        // Hiệu ứng gõ chữ
         const typedTextSpan = document.getElementById("typedText");
         const textArray = [
             "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
