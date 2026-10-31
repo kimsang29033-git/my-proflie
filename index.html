@@ -27,6 +27,17 @@
             position: relative;
         }
 
+        /* Canvas hiệu ứng chuột tương tác */
+        #cursorCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
         /* Hiệu ứng cánh hoa anh đào (Sakura) rơi */
         .sakura {
             position: fixed;
@@ -208,6 +219,9 @@
 </head>
 <body>
 
+    <!-- Canvas cho hiệu ứng chuột tương tác -->
+    <canvas id="cursorCanvas"></canvas>
+
     <div class="card">
         <!-- Avatar với viền phát sáng Cầu vồng RGB -->
         <div class="avatar-container">
@@ -237,21 +251,21 @@
         </div>
     </div>
 
-    <!-- Script tạo hiệu ứng cánh hoa anh đào rơi -->
+    <!-- Script tạo hiệu ứng cánh hoa anh đào rơi & Hạt ánh sáng theo chuột -->
     <script>
+        // 1. Hiệu ứng cánh hoa anh đào rơi
         function createSakura() {
             const sakura = document.createElement('div');
             sakura.classList.add('sakura');
             
-            // Các dạng biểu tượng hoa anh đào
             const petals = ['🌸', '💮', '🌸', '🌸'];
             sakura.innerText = petals[Math.floor(Math.random() * petals.length)];
             
             sakura.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 10 + 12; // Kích thước 12px - 22px
+            const size = Math.random() * 10 + 12;
             sakura.style.fontSize = size + 'px';
             
-            const duration = Math.random() * 4 + 4; // Tốc độ rơi 4s - 8s
+            const duration = Math.random() * 4 + 4;
             sakura.style.animationDuration = duration + 's';
             
             document.body.appendChild(sakura);
@@ -261,10 +275,75 @@
             }, duration * 1000);
         }
 
-        // Tạo cánh hoa liên tục mỗi 250ms
         setInterval(createSakura, 250);
+
+        // 2. Hiệu ứng hạt ánh sáng chạy theo con trỏ chuột
+        const canvas = document.getElementById('cursorCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            // Tạo 2 hạt ánh sáng mỗi khi di chuyển chuột
+            for (let i = 0; i < 2; i++) {
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`; // Tông màu hồng/tím hoa anh đào
+                this.life = 1; // Độ mờ giảm dần
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.03; // Tốc độ biến mất của hạt
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function handleParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(handleParticles);
+        }
+
+        handleParticles();
     </script>
 
 </body>
 </html>
-
