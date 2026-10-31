@@ -26,7 +26,6 @@
             position: relative;
         }
 
-        /* Canvas hiệu ứng chuột tương tác */
         #cursorCanvas {
             position: fixed;
             top: 0;
@@ -37,7 +36,6 @@
             z-index: 3;
         }
 
-        /* Hiệu ứng cánh hoa anh đào rơi */
         .sakura {
             position: fixed;
             top: -10px;
@@ -53,22 +51,13 @@
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg) translateX(0);
-                opacity: 0.9;
-            }
-            50% {
-                transform: translateY(50vh) rotate(180deg) translateX(25px);
-            }
-            100% {
-                transform: translateY(105vh) rotate(360deg) translateX(-25px);
-                opacity: 0.2;
-            }
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.9; }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(25px); }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(-25px); opacity: 0.2; }
         }
 
-        /* Card cá nhân kính mờ (Glassmorphism) */
         .card {
-            background-color: rgba(13, 17, 23, 0.85);
+            background-color: rgba(13, 17, 23, 0.88);
             border: 1px solid rgba(255, 183, 197, 0.35);
             border-radius: 24px;
             padding: 35px 25px;
@@ -76,18 +65,12 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-            transition: transform 0.3s ease;
             position: relative;
             z-index: 2;
             backdrop-filter: blur(12px);
             margin: auto;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Avatar & Viền phát sáng RGB */
         .avatar-wrapper {
             position: relative;
             width: 136px;
@@ -129,7 +112,6 @@
             z-index: 1;
         }
 
-        /* Huy hiệu trạng thái hoạt động */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -141,7 +123,6 @@
             font-size: 0.8rem;
             color: #8b949e;
             margin-bottom: 15px;
-            transition: all 0.3s ease;
         }
 
         .status-dot {
@@ -149,7 +130,6 @@
             height: 8px;
             background-color: #8b949e;
             border-radius: 50%;
-            transition: all 0.3s ease;
         }
 
         .online .status-dot {
@@ -171,7 +151,6 @@
             margin-bottom: 8px;
         }
 
-        /* Hiệu ứng gõ chữ Slogan */
         .tagline {
             font-size: 0.95rem;
             color: #ffb7c5;
@@ -205,7 +184,6 @@
             margin-bottom: 20px;
         }
 
-        /* Hộp Kỹ Năng (Tech Stack Badges) */
         .skills-section {
             margin-bottom: 20px;
         }
@@ -244,11 +222,6 @@
             box-shadow: 0 4px 12px rgba(255, 183, 197, 0.3);
         }
 
-        .skill-badge i {
-            font-size: 1rem;
-        }
-
-        /* Khung Modal Chi Tiết Bài Học */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -281,12 +254,6 @@
             text-align: left;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
         }
 
         .modal-close {
@@ -328,7 +295,6 @@
             margin-bottom: 6px;
         }
 
-        /* Nút Mạng Xã Hội */
         .links {
             display: flex;
             flex-direction: column;
@@ -365,7 +331,6 @@
             box-shadow: 0 4px 12px rgba(254, 44, 85, 0.4);
         }
 
-        /* Khung Mã QR */
         .qr-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -392,7 +357,6 @@
             transform: scale(1.05);
         }
 
-        /* Bộ Đếm Lượt Xem */
         .visitor-counter {
             margin-top: 20px;
             padding-top: 15px;
@@ -416,5 +380,22 @@
     <canvas id="cursorCanvas"></canvas>
 
     <div class="card">
-        <!-- Avatar & Viền RGB -->
-        <div class="avatar
+        <div class="avatar-wrapper" id="adminAvatar" title="Bấm 3 lần để chuyển trạng thái Online/Offline">
+            <div class="avatar-glow"></div>
+            <img src="sang.png" alt="Kim Hoàng Sang" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Kim+Hoang+Sang&background=fe2c55&color=fff&size=150'">
+        </div>
+        
+        <div class="status-badge" id="statusBadge">
+            <span class="status-dot"></span> <span id="statusText">Đang ngoại tuyến</span>
+        </div>
+        
+        <h1 class="name">Kim Hoàng Sang</h1>
+        
+        <p class="tagline"><span id="typedText"></span><span class="typing-cursor"></span></p>
+        
+        <p class="bio">
+            Chào bạn! Mình là Kim Hoàng Sang. Rất vui được kết nối cùng bạn! Cùng ghé thăm trang cá nhân và theo dõi mình nhé!
+        </p>
+
+        <div class="skills-section">
+            <p class="skills-title">⚡ H
