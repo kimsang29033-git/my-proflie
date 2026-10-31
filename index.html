@@ -398,4 +398,229 @@
         </p>
 
         <div class="skills-section">
-            <p class="skills-title">⚡ H
+            <p class="skills-title">⚡ Hộp kỹ năng (Nhấn để xem chi tiết)</p>
+            <div class="skills-container">
+                <span class="skill-badge" onclick="openSkillModal('python')" style="color: #3776ab;"><i class="fab fa-python"></i> Python</span>
+                <span class="skill-badge" onclick="openSkillModal('cpp')" style="color: #00599c;"><i class="fas fa-code"></i> C++</span>
+                <span class="skill-badge" onclick="openSkillModal('html')" style="color: #e34f26;"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="skill-badge" onclick="openSkillModal('css')" style="color: #1572b6;"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="skill-badge" onclick="openSkillModal('js')" style="color: #f7df1e;"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="skill-badge" onclick="openSkillModal('vscode')" style="color: #007acc;"><i class="fas fa-laptop-code"></i> VS Code</span>
+            </div>
+        </div>
+
+        <div class="links">
+            <a href="https://www.facebook.com/h24302?locale=vi_VN" target="_blank" class="btn btn-facebook">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://www.tiktok.com/@hsang.ahihi" target="_blank" class="btn btn-tiktok">
+                <i class="fab fa-tiktok"></i> TikTok (@hsang.ahihi)
+            </a>
+        </div>
+
+        <div class="qr-section">
+            <p class="qr-title">Quét mã QR để chia sẻ trang cá nhân:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://kimsang29033-git.github.io/my-proflie/&color=000000&bgcolor=ffffff" alt="Mã QR Profile" class="qr-image">
+        </div>
+
+        <div class="visitor-counter">
+            <i class="fas fa-eye"></i> Lượt truy cập: 
+            <img src="https://profile-counter.glitch.me/kimsang29033-profile/count.svg" alt="Visitor Count">
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="skillModal" onclick="closeSkillModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSkillModalDirect()"><i class="fas fa-times"></i></button>
+            <h3 class="modal-title" id="modalTitle">Tiêu đề kỹ năng</h3>
+            <div class="modal-body" id="modalBody">Nội dung bài học...</div>
+        </div>
+    </div>
+
+    <script>
+        const skillDetails = {
+            python: {
+                title: "<i class='fab fa-python' style='color:#3776ab;'></i> Kỹ năng Python",
+                body: "Dự án & Bài học đã làm:<ul><li><b>PyQt5:</b> Xây dựng ứng dụng giao diện desktop.</li><li><b>Flask Web:</b> Lập trình ứng dụng backend đơn giản.</li><li><b>MediaPipe:</b> Nhận diện cử chỉ tay qua camera.</li></ul>"
+            },
+            cpp: {
+                title: "<i class='fas fa-code' style='color:#00599c;'></i> Kỹ năng C++",
+                body: "Dự án & Bài học đã làm:<ul><li><b>Win32 API & SFML:</b> Tạo ứng dụng đồ họa trên Windows.</li><li>Ứng dụng tạo chữ hoạt hình & hiển thị lời bài hát.</li></ul>"
+            },
+            html: {
+                title: "<i class='fab fa-html5' style='color:#e34f26;'></i> Kỹ năng HTML5",
+                body: "Dự án & Bài học đã làm:<ul><li>Thiết kế cấu trúc trang web Profile cá nhân chuẩn SEO.</li><li>Tích hợp các thẻ media và liên kết mạng xã hội.</li></ul>"
+            },
+            css: {
+                title: "<i class='fab fa-css3-alt' style='color:#1572b6;'></i> Kỹ năng CSS3",
+                body: "Dự án & Bài học đã làm:<ul><li>Tạo hiệu ứng <b>RGB Glow</b> phát sáng quanh Avatar.</li><li>Giao diện kính mờ <b>Glassmorphism</b> hiện đại.</li></ul>"
+            },
+            js: {
+                title: "<i class='fab fa-js' style='color:#f7df1e;'></i> Kỹ năng JavaScript",
+                body: "Dự án & Bài học đã làm:<ul><li><b>Canvas HTML5:</b> Hiệu ứng hạt lấp lánh theo con trỏ chuột.</li><li><b>Typing Effect:</b> Hiệu ứng gõ chữ slogan tự động.</li></ul>"
+            },
+            vscode: {
+                title: "<i class='fas fa-laptop-code' style='color:#007acc;'></i> Môi trường VS Code",
+                body: "Công cụ & Cấu hình:<ul><li>Cấu hình <b>MSYS2 MinGW g++</b> cho C/C++.</li><li>Sử dụng Live Server và quản lý mã nguồn Git.</li></ul>"
+            }
+        };
+
+        function openSkillModal(key) {
+            const modal = document.getElementById('skillModal');
+            document.getElementById('modalTitle').innerHTML = skillDetails[key].title;
+            document.getElementById('modalBody').innerHTML = skillDetails[key].body;
+            modal.classList.add('active');
+        }
+
+        function closeSkillModalDirect() {
+            document.getElementById('skillModal').classList.remove('active');
+        }
+
+        function closeSkillModal(e) {
+            if (e.target.id === 'skillModal') {
+                closeSkillModalDirect();
+            }
+        }
+
+        const statusBadge = document.getElementById('statusBadge');
+        const statusText = document.getElementById('statusText');
+        const adminAvatar = document.getElementById('adminAvatar');
+
+        let isAdminOnline = localStorage.getItem('isAdminOnline') === 'true';
+
+        function updateAdminStatusUI() {
+            if (isAdminOnline) {
+                statusBadge.classList.add('online');
+                statusText.innerText = 'Đang trực tuyến';
+            } else {
+                statusBadge.classList.remove('online');
+                statusText.innerText = 'Đang ngoại tuyến';
+            }
+        }
+        updateAdminStatusUI();
+
+        let clickCount = 0;
+        let clickTimer = null;
+
+        adminAvatar.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            if (clickCount === 3) {
+                isAdminOnline = !isAdminOnline;
+                localStorage.setItem('isAdminOnline', isAdminOnline);
+                updateAdminStatusUI();
+                alert(isAdminOnline ? "🟢 Đã bật: Đang trực tuyến!" : "⚪ Đã chuyển: Đang ngoại tuyến!");
+                clickCount = 0;
+            } else {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+            }
+        });
+
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
+            sakura.innerText = '🌸';
+            sakura.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 10 + 12;
+            sakura.style.fontSize = size + 'px';
+            const duration = Math.random() * 4 + 4;
+            sakura.style.animationDuration = duration + 's';
+            document.body.appendChild(sakura);
+            setTimeout(() => { sakura.remove(); }, duration * 1000);
+        }
+        setInterval(createSakura, 250);
+
+        const canvas = document.getElementById('cursorCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            for (let i = 0; i < 2; i++) {
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 75%)`;
+                this.life = 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.03;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function handleParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) particles.splice(i, 1);
+            }
+            requestAnimationFrame(handleParticles);
+        }
+        handleParticles();
+
+        const typedTextSpan = document.getElementById("typedText");
+        const textArray = [
+            "🌸 Kết nối - Cảm hứng - Yêu đời 🌸",
+            "💻 Chào mừng đến với trang cá nhân!",
+            "✨ Cùng theo dõi các dự án mới nhé!"
+        ];
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 80);
+            } else {
+                setTimeout(erase, 1500);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, 40);
+            } else {
+                textArrayIndex = (textArrayIndex + 1) % textArray.length;
+                setTimeout(type, 200);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (textArray.length) setTimeout(type, 500);
+        });
+    </script>
+</body>
+</html>
